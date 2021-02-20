@@ -8,7 +8,7 @@
       },
       "party": "Xaviers",
       "logo": "https://images.unsplash.com/photo-1548964095-b9a292144866?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NDZ8fHByZXNpZGVudHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      "votes": 15
+      "votes": 21
     },
     {
       "id": 2,
@@ -38,7 +38,7 @@
       },
       "party": "Salazers",
       "logo": "https://images.unsplash.com/flagged/photo-1567194974473-c866a1ba88d5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxzZWFyY2h8OTF8fHByZXNpZGVudHxlbnwwfHwwfA%3D%3D&auto=format&fit=crop&w=500&q=60",
-      "votes": 1
+      "votes": 2
     }
   ]
 }

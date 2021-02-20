@@ -6,9 +6,10 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import "./Vote.css";
+
 import { Redirect } from "react-router-dom";
-import { confirmAlert } from "react-confirm-alert";
-class Vote extends Component {
+
+class Presidential extends Component {
   constructor(props) {
     super(props);
 
@@ -96,32 +97,13 @@ class Vote extends Component {
   //     }
   //     return max;
   // }
-  submit = () => {
-    confirmAlert({
-      title: "Confirm to submit",
-      message: "Are you sure to do this.",
-      buttons: [
-        {
-          label: "Yes",
-          onClick: () => alert("Click Yes"),
-        },
-        {
-          label: "No",
-          onClick: () => alert("Click No"),
-        },
-      ],
-    });
-  };
 
   render() {
     console.log(this.state.myList);
     const voting = this.state.myList.map((list) => {
       return (
         <div>
-          <br />
-          <br />
-          <br />
-          <br />
+          <h1>Presidential </h1>
           <Card key={list.id} className="card">
             <Card.Img variant="top" src={list.logo} />
             <Card.Body>
@@ -132,7 +114,7 @@ class Vote extends Component {
               <Button
                 disabled={this.state.isButtonDisabled}
                 variant="success"
-                onClick={(() => this.castVote(list.id), this.submit)}
+                onClick={() => this.castVote(list.id)}
               >
                 Vote
               </Button>
@@ -154,8 +136,9 @@ class Vote extends Component {
     //             return ( < li key = { item.id } > { item.name.first } { item.name.last } < /  li > )})
 
     // console.log(winnerArr)
+
     return <div> {voting} </div>;
   }
 }
 
-export default Vote;
+export default Presidential;

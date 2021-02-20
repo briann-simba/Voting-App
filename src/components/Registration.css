@@ -1,16 +1,9 @@
-.btn:disabled {
-  background-color: transparent;
-  color: chartreuse;
-}
-
-.btn:disabled:hover {
-}
-
-.card {
+.formContainer {
   text-align: center;
   display: block;
   justify-content: center;
   align-items: center;
   margin: auto;
   width: 19rem;
+  margin-bottom: 70px;
 }
