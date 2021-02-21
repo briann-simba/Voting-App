@@ -11,8 +11,8 @@ import Verification from "./Verification";
 import Home from "./Home";
 import ResultList from "./ResultList";
 import Vote from "./Vote";
-import Login from "./Login";
-import Presidential from "./Presidential";
+import Election from "./Election";
+
 import history from "./history";
 
 class Nav extends Component {
@@ -43,17 +43,16 @@ class Nav extends Component {
             </li>
             <li>
               <NavLink exact to="/">
-                <i className="ni ni-planet"> HomePage </i>
+                <i className="ni ni-planet"> Elections </i>
               </NavLink>
             </li>
           </ul>
           <div className="content">
-            <Route exact path="/" component={Login} />
+            <Route exact path="/" component={Election} />
             <Route path="/Register" component={Registration} />
             <Route path="/Verification" component={Verification} />
             <Route path="/Results" component={ResultList} />
             <Route path="/Vote" component={Vote} />
-            <Route path="/Presidential" component={Presidential} />
           </div>
         </div>
       </Router>

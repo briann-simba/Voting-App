@@ -10,7 +10,7 @@ class Login extends Component {
     return (
       <div
         className="formContainer"
-        style={{ height: "50vh", borderRadius: "25px", marginTop: "100px" }}
+        style={{ height: "50vh", borderRadius: "25px", marginTop: "80px" }}
       >
         <Form>
           <Form.Label>
