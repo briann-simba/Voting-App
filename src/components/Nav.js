@@ -6,7 +6,8 @@ import Login from './Login'
 import Home from './Home'
 import ResultList from './ResultList'
 import Vote from './Vote'
-import LogOut from './LogOut'
+
+import history from './history'
 
 
 class Nav extends Component {
@@ -27,13 +28,13 @@ class Nav extends Component {
             NavLink to = '/Register' > <
             i className = "ni ni-circle-08" > Register < /i> < /NavLink > < /li ><
             li > <
-            NavLink exact to = '/Home' > <
+            NavLink exact to = '/' > <
             i className = "ni ni-planet" > HomePage < /i> < /NavLink > < /li > < /
             ul > <
             div className = "content" >
 
             <
-            Route exact path = '/Home'
+            Route exact path = '/'
             component = { Home }
             /> <
             Route path = '/Register'

@@ -1,0 +1,6 @@
+.btn:disabled {
+    background-color: transparent;
+    color: chartreuse;
+}
+
+.btn:disabled:hover {}

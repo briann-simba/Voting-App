@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { Component } from 'react'
-import './resultlist.css'
+import CountdownTimer from 'react-component-countdown-timer'
 
 class ResultList extends Component {
     constructor(props) {
@@ -12,14 +12,26 @@ class ResultList extends Component {
     }
 
     render() {
+        var settings = {
+            count: 5432,
+            border: true,
+            showTitle: true,
+            noPoints: true,
+        };
 
-        return ( < div className = "ktitle" >
-            <
-            h1 className = "kh1" > elokira < br / > voting < /h1>
+        return ( < div id = "cont_modal"
+            style = {
+                { display: "block", width: "20%", marginLeft: "40%" }
+            } >
 
             <
-            /
-            div > )
+            span style = {
+                { color: "green" }
+            } > Results will be out in: < /span> <
+            CountdownTimer {...settings }
+            border responsive / > <
+            /div> 
+        )
     }
 }
 

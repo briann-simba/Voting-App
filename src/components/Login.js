@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
-import LogOut from './LogOut'
+
 class Login extends Component {
     render() {
         return ( < div className = "formContainer"

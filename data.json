@@ -1,0 +1,26 @@
+{
+    "customers": [
+        { "id": 1, "name": { "first": "Leroy", "last": "Walton" } },
+        { "id": 2, "name": { "first": "Shane", "last": "Garrett" } },
+        { "id": 3, "name": { "first": "Sheryl", "last": "Robinson" } },
+        { "id": 4, "name": { "first": "Fred", "last": "Bush" } },
+        { "id": 5, "name": { "first": "Julie", "last": "Dawson" } },
+        { "id": 6, "name": { "first": "Ervin", "last": "Vega" } },
+        { "id": 7, "name": { "first": "Emanuel", "last": "Watson" } },
+        { "id": 8, "name": { "first": "Fred", "last": "Sharp" } },
+        { "id": 9, "name": { "first": "Virginia", "last": "Hall" } },
+        { "id": 10, "name": { "first": "Carrie", "last": "Sanchez" } }
+    ],
+    "addresses": [
+        { "id": 1, "address": "Belmont Avenue", "state": "KS" },
+        { "id": 2, "address": "10th Street", "state": "MO" },
+        { "id": 3, "address": "Route 100", "state": "IA" },
+        { "id": 4, "address": "Evergreen Lane", "state": "MN" },
+        { "id": 5, "address": "Main Street", "state": "WI" },
+        { "id": 6, "address": "Briarwood Drive", "state": "MN" },
+        { "id": 7, "address": "Linden Avenue", "state": "IA" },
+        { "id": 8, "address": "Eagle Road", "state": "MO" },
+        { "id": 9, "address": "Glenwood Avenue", "state": "KS" },
+        { "id": 10, "address": "Elm Street", "state": "WI" }
+    ]
+}
