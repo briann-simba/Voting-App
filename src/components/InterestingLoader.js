@@ -1,9 +1,7 @@
 import React from 'react'
 import './InterestingLoader.css'
 const InterestingLoader = () => {
-    return ( <
-        div > <
-        div id = "loop"
+    return ( < div > < div id = "loop"
         className = "center" > < /div> <
         div id = "bike-wrapper"
         className = "center" >

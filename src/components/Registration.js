@@ -71,37 +71,12 @@ class Registration extends Component {
             Form.Label > First Name < /Form.Label> <
             Form.Control type = "text"
             name = "fName"
-            placeholder = "Enter your First Name"
-
-
-            /
-            >
+            placeholder = "Enter your First Name" / > < /Form.Group></Form.Row >
             <
-            /
-            Form.Group > <
-            Form.Group as = { Col }
-            controlId = "formGridLName" >
-            <
-            Form.Label > Last Name < /Form.Label> <
-            Form.Control type = "text"
-            name = "lName"
-            placeholder = "Enter your Last Name" / >
-            <
-            /Form.Group>
-
-            <
-            /
             Form.Row >
-
             <
-            Form.Group controlId = "formGridPhoneNumber" >
-            <
-            Form.Label > Phone Number < /Form.Label> <
-            Form.Control placeholder = "Phone Number e.g. +254797678505"
-            name = "phone" / >
-            <
-            /Form.Group> <
-            Form.Group controlId = "formGridIdNumber" >
+            Form.Group as = { Col }
+            controlId = "formGridIdNumber" >
             <
             Form.Label > National ID Number < /Form.Label> <
             Form.Control name = "id"
@@ -109,35 +84,8 @@ class Registration extends Component {
             <
             /Form.Group>
 
-
-
-
             <
-            Form.Row >
-            <
-            Form.Group as = { Col }
-            controlId = "formGridPassword" >
-            <
-            Form.Label > Password < /Form.Label> <
-            Form.Control name = "pass"
-            type = "password"
-            placeholder = "Create a Password" / >
-            <
-            /Form.Group></Form.Row >
-            <
-            Form.Row >
-            <
-            Form.Group as = { Col }
-            controlId = "formGridPasswordAgain" >
-            <
-            Form.Label > Password < /Form.Label> <
-            Form.Control name = "passAgain"
-            type = "password"
-            placeholder = "Enter Password Again" / >
-            <
-            /Form.Group></Form.Row >
-
-
+            /Form.Row> 
 
             <
             Button className = "cta"
@@ -146,8 +94,7 @@ class Registration extends Component {
             }
             variant = "primary"
             type = "submit" >
-            Submit <
-            /Button> < /
+            Validate < /Button> < /
             Form > < /div>
         )
     }

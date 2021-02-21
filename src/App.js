@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-do
 import Home from './components/Home';
 import ResultList from './components/ResultList'
 import Registration from './components/Registration'
-
+import Login from './components/Login'
 
 
 
@@ -16,7 +16,7 @@ import Registration from './components/Registration'
 function App() {
 
     return ( <
-        div className = "App" > < Nav / > < /div>
+        div className = "App" > < Nav / > < Login / > < /div>
     );
 
 

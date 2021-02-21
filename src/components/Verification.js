@@ -12,27 +12,17 @@ class Login extends Component {
             } > <
             Form >
             <
-            Form.Label > < h2 > Login < /h2></Form.Label >
-            <
-            Form.Row >
+            Form.Label > < h1 > Verification < /h1></Form.Label >
             <
             Form.Group controlId = "formGridIdNumber" >
             <
-            Form.Label > National ID Number < /Form.Label> <
-            Form.Control name = "idno"
-            placeholder = "Enter your National ID No." / >
+            Form.Label > Phone Number < /Form.Label> <
+            Form.Control name = "phone"
+            placeholder = "Enter your Phone Number in this format e.g +254" / >
             <
-            /Form.Group></Form.Row >
+            /Form.Group>
 
-            <
-            Form.Row > <
-            Form.Group controlId = "formVerificationId" >
-            <
-            Form.Control name = "idno"
-            placeholder = "Enter the sent 6-digit verification code " / >
-            <
-            /
-            Form.Group > < /Form.Row >
+
 
             <
             Button className = "cta"

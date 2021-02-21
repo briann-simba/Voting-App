@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-dom'
 import { Component } from 'react'
 import Registration from './Registration'
-import Login from './Login'
+import Verification from './Verification'
 import Home from './Home'
 import ResultList from './ResultList'
 import Vote from './Vote'
@@ -22,8 +22,8 @@ class Nav extends Component {
             li > <
             NavLink to = '/Vote' > < i class = "now-ui-icons objects_support-17" > CastYourVote < /i> < /NavLink > < /li >  <
             li > <
-            NavLink to = '/Login' > <
-            i className = "ni ni-key-25" > LogIn / LogOut < /i > < /NavLink > < /li > <
+            NavLink to = '/Verification' > <
+            i className = "ni ni-key-25" > Verification / LogOut < /i > < /NavLink > < /li > <
             li > <
             NavLink to = '/Register' > <
             i className = "ni ni-circle-08" > Register < /i> < /NavLink > < /li ><
@@ -40,8 +40,8 @@ class Nav extends Component {
             Route path = '/Register'
             component = { Registration }
             /> <
-            Route path = '/Login'
-            component = { Login }
+            Route path = '/Verification'
+            component = { Verification }
             /> <
             Route path = '/Results'
             component = { ResultList }
