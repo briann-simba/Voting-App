@@ -8,7 +8,7 @@ class Login extends Component {
     render() {
         return ( < div className = "formContainer"
             style = {
-                { height: '50vh', borderRadius: "25px" }
+                { height: '50vh', borderRadius: "25px", marginTop: '80px' }
             } > <
             Form >
             <
@@ -16,7 +16,8 @@ class Login extends Component {
             <
             Form.Row >
             <
-            Form.Group controlId = "formGridIdNumber" >
+            Form.Group as = { Col }
+            controlId = "formGridIdNumber" >
             <
             Form.Label > National ID Number < /Form.Label> <
             Form.Control name = "idno"
@@ -26,7 +27,8 @@ class Login extends Component {
 
             <
             Form.Row > <
-            Form.Group controlId = "formVerificationId" >
+            Form.Group as = { Col }
+            controlId = "formVerificationId" >
             <
             Form.Control name = "idno"
             placeholder = "Enter the sent 6-digit verification code " / >

@@ -6,6 +6,7 @@ import Verification from './Verification'
 import Home from './Home'
 import ResultList from './ResultList'
 import Vote from './Vote'
+import Election from './Election'
 
 import history from './history'
 
@@ -29,13 +30,13 @@ class Nav extends Component {
             i className = "ni ni-circle-08" > Register < /i> < /NavLink > < /li ><
             li > <
             NavLink exact to = '/' > <
-            i className = "ni ni-planet" > HomePage < /i> < /NavLink > < /li > < /
+            i className = "ni ni-planet" > Elections < /i> < /NavLink > < /li > < /
             ul > <
             div className = "content" >
 
             <
             Route exact path = '/'
-            component = { Home }
+            component = { Election }
             /> <
             Route path = '/Register'
             component = { Registration }
