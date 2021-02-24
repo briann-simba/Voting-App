@@ -24,7 +24,7 @@ class Vote extends Component {
 
   componentDidMount() {
     this.setState({}, () => {
-      fetch("http://localhost:4000/candidates")
+      fetch("http://localhost:4000/candidate")
         .then((res) => res.json())
         .then((result) =>
           this.setState({
@@ -41,7 +41,7 @@ class Vote extends Component {
     });
 
     history.push("/Results");
-    fetch("http://localhost:4000/candidates/" + id, {
+    fetch("http://localhost:4000/candidate/" + id, {
       method: "PATCH",
       headers: {
         "Content-type": "application/json",
@@ -96,49 +96,32 @@ class Vote extends Component {
   //     }
   //     return max;
   // }
-  submit = () => {
-    confirmAlert({
-      title: "Confirm to submit",
-      message: "Are you sure to do this.",
-      buttons: [
-        {
-          label: "Yes",
-          onClick: () => alert("Click Yes"),
-        },
-        {
-          label: "No",
-          onClick: () => alert("Click No"),
-        },
-      ],
-    });
-  };
 
   render() {
     console.log(this.state.myList);
     const voting = this.state.myList.map((list) => {
       return (
-        <div>
-          <br />
-          <br />
-          <br />
-          <br />
-          <Card key={list.id} className="card">
-            <Card.Img variant="top" src={list.logo} />
-            <Card.Body>
-              <Card.Title>
-                {list.name.first} {list.name.last}
-              </Card.Title>
-              {list.party}
-              <Button
-                disabled={this.state.isButtonDisabled}
-                variant="success"
-                onClick={(() => this.castVote(list.id), this.submit)}
-              >
-                Vote
-              </Button>
-            </Card.Body>
-          </Card>
-        </div>
+        <Card
+          key={list.candidateId}
+          style={{
+            width: "18rem",
+            marginBottom: "20px",
+            height: "60vh",
+            marginLeft: "37%",
+          }}
+        >
+          <Card.Img variant="top" src={list.logo} />{" "}
+          <Card.Body>
+            <Card.Title> {list.candidateName} </Card.Title> {list.positionName}{" "}
+            <Button
+              disabled={this.state.isButtonDisabled}
+              variant="success"
+              onClick={() => this.castVote(list.candidateId)}
+            >
+              Vote{" "}
+            </Button>{" "}
+          </Card.Body>{" "}
+        </Card>
       );
     });
 

@@ -27,14 +27,16 @@ class App extends Component {
   render() {
     const { isAuthenticated } = this.state;
     if (isAuthenticated) {
-      return <Login />;
+      return <Registration />;
     } else {
       return (
         <div className="App">
-          <Nav />
+          {" "}
+          <Nav />{" "}
         </div>
       );
     }
   }
 }
+
 export default App;
