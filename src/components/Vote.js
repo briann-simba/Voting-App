@@ -24,7 +24,7 @@ class Vote extends Component {
 
     componentDidMount() {
         this.setState({}, () => {
-            fetch("http://localhost:4000/candidates")
+            fetch("http://localhost:4000/candidate")
                 .then(res => res.json())
                 .then(result =>
                     this.setState({
@@ -47,12 +47,12 @@ class Vote extends Component {
         })
 
         history.push('/Results')
-        fetch("http://localhost:4000/candidates/" + id, {
+        fetch("http://localhost:4000/candidate/" + id, {
                 method: "PATCH",
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify({ votes: this.state.myList[id - 1].votes + 1 })
+                body: JSON.stringify({ votes: this.state.myList[id-1].votes + 1 })
             })
             .then(this.props.history.push('/Results'))
 
@@ -115,7 +115,7 @@ class Vote extends Component {
             console.log(this.state.myList)
             const voting = this.state.myList.map(list => {
                         return ( <
-                            Card key = { list.id }
+                            Card key = { list.candidateId }
                             style = {
                                 { width: "18rem", marginBottom: "20px", height: "60vh", marginLeft: "37%" }
                             } >
@@ -125,11 +125,11 @@ class Vote extends Component {
                             /> <
                             Card.Body >
                             <
-                            Card.Title > { list.name.first } { list.name.last } < /Card.Title> { list.party } <
+                            Card.Title > { list.candidateName} < /Card.Title> { list.positionName } <
                             Button disabled = { this.state.isButtonDisabled }
                             variant = "success"
                             onClick = {
-                                () => this.castVote(list.id)
+                                () => this.castVote(list.candidateId)
                             } >
                             Vote <
                             /Button> < /

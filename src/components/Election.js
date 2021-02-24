@@ -11,68 +11,169 @@ class Election extends Component {
 
         this.state = {
             election: [],
-            show: false
+            position:[],
+            candidate:[],
+            show: false,
+            isButtonDisabled:false,
+            
         }
         this.showModal = this.showModal.bind(this);
         this.hideModal = this.hideModal.bind(this);
+        this.castVote=this.castVote.bind('this')
+        this.unDuplicateArraySingleValues=this.unDuplicateArraySingleValues.bind(this)
+       
 
     }
+    componentDidMount() {
+        this.setState({}, () => {
+            Promise.all([
+                fetch("http://localhost:4000/election").then(value => value.json()),
+                fetch("http://localhost:4000/position").then(value => value.json()),
+                fetch("http://localhost:4000/candidate").then(value => value.json()),
+                
+                
+                ])
+                .then(value => {
+                   console.log(value)
+                   this.setState({
+                       election:value[0],
+                       position:value[1],
+                       candidate:value[2]
+                   })
+                       
+                  //json response
+                
+                
+            })
+           
+    })
+}
+
+
+
 
     showModal = () => {
+        
         this.setState({ show: true });
-    };
 
+
+    };
+showModal=()=>{
+
+this.setState({show:true})
+
+}
     hideModal = () => {
         this.setState({ show: false });
     };
+// handleVote=(id)=>{
+//     fetch("http://localhost:4000/vote",{method: "POST",
+//     mode:'cors',
+//     headers: {
+//         'Content-type': 'application/json'
+//     },
+//     body: JSON.stringify({candidateId:"",voterId:"",voteDate:""})
+// })
+// }
+    
 
-    componentDidMount() {
-        this.setState({}, () => {
-            fetch("http://localhost:4000/election")
-                .then(res => res.json())
-                .then(result =>
-                    this.setState({
-                        election: result
 
-                    })
 
-                )
-                .catch(console.log);
 
+    castVote= (id)=> {
+        this.setState({
+            isButtonDisabled: true
         })
+
+        
+        fetch("http://localhost:4000/candidate/" + id, {
+                method: "PATCH",
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({ votes: this.state.candidate[id - 1].votes + 1 })
+            })
+            .then(this.props.history.push('/Results'))
+
+        .catch(console.log)
+
+
+
     }
 
-
+    unDuplicateArraySingleValues(array) {
+        // Check if we are dealing with an Array that is not empty
+        if (!array || !Array.isArray(array) || array.length === 0) {
+          return array;
+        }
+      
+        // Return a Array of unique values thanks to the Set
+        return [...new Set(array)];
+      }
 
 
     render() {
 
-        const { election } = this.state
-        console.log(election)
+        const { election,position,candidate} = this.state
+        console.log(candidate)
+const candModal=candidate.map(cand=>
+    {
+        return  (
+
+        <
+        Card key={cand.candidateId} style = {
+            { width: "18rem", margin: "auto", marginBottom: "50px", justifyContent: "center", display: "block", textAlign: "center" }
+        } >
+        <
+        Card.Img variant = "top"
+        src ={cand.logo}  /
+        >
+        <
+        Card.Body >
+        <
+        Card.Title > {cand.candidateName} < /Card.Title><
+        Button type="submit" disabled={this.state.isButtonDisabled}onClick={() => this.castVote(cand.candidateId)} variant = "success" >
+        Vote <
+        /Button> < /
+        Card.Body > <
+        /Card>)
+    })
+
+
+const newpos=this.unDuplicateArraySingleValues(position)
+
+const myPos= newpos.map((pos) => { return (<
+    Dropdown.Item  key={pos.positionId}
+    onClick = {this.showModal
+    } >
+    {pos.positionName} < /Dropdown.Item>)
+ })
+
+
         const electionCard = election.map(e => {
-                return ( < div key = { e.electionId } >
+                return ( < div  >
                     <
                     div className = "row" >
                     <
-                    div className = "col-lg-4 mb-4" >
+                    div className = "col-lg-8 mb-4" >
                     <
-                    div className = "card"
+                    div  key = { e.electionId } className = "card"
                     style = {
-                        { borderRadius: "25px" }
+                        { backgroundColor:"transparent",marginTop:"0",marginLeft:"23%" ,justifyContent: "center", textAlign: "center",borderRadius:"8px"}
                     } >
                     <
                     img className = "card-img-top"
                     style = {
-                        { borderRadius: "25px" }
+                        { display: "block", marginLeft:"auto",marginRight:"auto",width:"50%"}
                     }
-                    src = "https://images.unsplash.com/photo-1548964095-b9a292144866?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NDZ8fHByZXNpZGVudHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                    src = "https://images.unsplash.com/photo-1494172961521-33799ddd43a5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=751&q=80"
                     alt = "" / >
 
                     <
                     div className = "card-body" >
                     <
                     h5 className = "card-title" > { e.electionName }
-                    Elections < /h5><h5>StartTime:{e.startDate}EndTime:{e.stopDate} 
+                     < /h5><h5>StartTime:{e.startDate}EndTime:{e.stopDate} 
 
 
 
@@ -85,23 +186,20 @@ class Election extends Component {
                     Positions Being Contested For < /Dropdown.Toggle>
 
                     <
-                    Dropdown.Menu >
-                    <
-                    Dropdown.Item href = "#"
-                    onClick = { this.showModal } >
-                    Presidential Elections < /Dropdown.Item> <
-                    Dropdown.Item href = "#/action-2" > Gubernatorial < /Dropdown.Item>  < /
+                    Dropdown.Menu>
+                    {myPos}  < /
                     Dropdown.Menu > < /
-                    Dropdown > < /
+                    Dropdown >< /
                     div > < /
                     div > <
                     /div></div > < /div> )
+                    
 
                 })
 
-            return ( < div > { electionCard } <
+            return ( < div style={{overflow:"hidden"}}> {electionCard} <
                 Modal style = {
-                    { overflow: "scroll" }
+                    { overflowY: "scroll" ,width:"100%"}
                 }
                 show = { this.state.show }
                 onHide = { this.hideModal }
@@ -109,50 +207,11 @@ class Election extends Component {
                 keyboard = { false } > <
                 Modal.Header closeButton >
                 <
-                Modal.Title > < center > Vying Candidates < /center> < /Modal.Title > < /
+                Modal.Title  > < center > Vying Candidates < /center> < /Modal.Title > < /
                 Modal.Header > <
-                Modal.Body >
-
-                <
-                Card style = {
-                    { width: "18rem", margin: "auto", marginBottom: "50px", justifyContent: "center", display: "block", textAlign: "center" }
-                } >
-                <
-                Card.Img variant = "top"
-                src = "https://images.unsplash.com/photo-1531123414780-f74242c2b052?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTh8fGJsYWNrJTIwcGVvcGxlfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" /
-                >
-                <
-                Card.Body >
-                <
-                Card.Title > Hughie Jackson < /Card.Title><
-                Button variant = "success" >
-                Vote <
-                /Button> < /
-                Card.Body > <
-                /Card>
-
-                <
-                Card style = {
-                    { width: "18rem", margin: "auto", justifyContent: "center", display: "block", textAlign: "center" }
-                } >
-                <
-                Card.Img variant = "top"
-                src = "https://images.unsplash.com/photo-1531123414780-f74242c2b052?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTh8fGJsYWNrJTIwcGVvcGxlfGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" /
-                >
-                <
-                Card.Body >
-                <
-                Card.Title > Hughie Jackson < /Card.Title><
-                Button variant = "success" >
-                Vote <
-                /Button> < /
-                Card.Body > <
-                /Card>
-
-
-                <
-                /
-                Modal.Body > < /Modal> </div >
+                Modal.Body >{candModal}</
+                                Modal.Body></Modal>
+         </div >
             )
 
         }
