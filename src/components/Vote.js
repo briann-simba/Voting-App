@@ -1,16 +1,16 @@
-import axios from 'axios'
-import history from './history'
-import React, { Component, useState } from 'react'
+// import axios from 'axios'
+// import history from './history'
+import React, { Component } from 'react'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
+// import Col from 'react-bootstrap/Col'
+// import Row from 'react-bootstrap/Row'
 import './Vote.css'
-import { Redirect } from 'react-router-dom'
+// import { Redirect } from 'react-router-dom'
 class Vote extends Component {
     constructor(props) {
         super(props)
-
+      
         this.state = {
             myList: [],
             isButtonDisabled: false
@@ -46,7 +46,7 @@ class Vote extends Component {
             isButtonDisabled: true
         })
 
-        history.push('/Results')
+        
         fetch("http://localhost:4000/candidate/" + id, {
                 method: "PATCH",
                 headers: {
@@ -56,7 +56,7 @@ class Vote extends Component {
             })
             .then(this.props.history.push('/Results'))
 
-        .catch(console.log)
+        .catch(error=>console.log(error))
 
 
 

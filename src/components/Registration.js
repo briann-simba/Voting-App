@@ -3,9 +3,10 @@ import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import history from './history'
-import Verification from './Verification'
+
+import {Redirect} from 'react-router'
 import {withRouter} from 'react-router-dom'
-import { Card, Dropdown, Modal } from 'react-bootstrap'
+import {  Modal } from 'react-bootstrap'
 
 class Registration extends Component {
     constructor(props) {
@@ -16,17 +17,20 @@ class Registration extends Component {
 
 
         this.state = {
-            id: "",
-            fName: "",
+            idNumber: "",
+            firstName: "",
             registration_object:[],
             verification_object:[],
+            auth_object:[],
             showModal1:false,
             showModal2:false,
-            phoneNumber:""
+            phoneNumber:"",
+            loginCode:""
             
             
             
         };
+        this.handleGenCode=this.handleGenCode.bind(this)
         this.SubmitReg = this.SubmitReg.bind(this)
         this.submitVer=this.submitVer.bind(this)
         this.idRef=React.createRef()
@@ -40,55 +44,66 @@ class Registration extends Component {
 
       SubmitReg(event) {
           event.preventDefault()
-                 
-          async function postData(url = '', data = {}) {
-            // Default options are marked with *
-            const response = await fetch(url, {
-              method: 'POST', // *GET, POST, PUT, DELETE, etc.
-              mode: 'cors', // no-cors, *cors, same-origin
-              // *default, no-cache, reload, force-cache, only-if-cached
-               // include, *same-origin, omit
-              headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-              },
-              redirect: 'follow', // manual, *follow, error
- // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-              body: JSON.stringify(data) // body data type must match "Content-Type" header
-            });
-            return  [response.json(),response.status];
+          fetch("https://api.elokiravote.ml/users/verify", {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({ idNumber:this.idRef.current.value,firstName:this.nameRef.current.value})
+        })
+        .then(data=>{
+            if (data.status===200){
+                     
+                       return data.json()
+            }
+            else if (data.status===403){
+                alert("Please check your details")
+                return "Please check your details"
+            }
+            else{
+                return "Account already exists"
+            }})
+        .then(res=>{console.log(res)
             
-            // parses JSON response into native JavaScript objects
-          }
-
-
-        
-          postData('https://api.elokiravote.ml/users/verify',{idNumber:this.idRef.current.value,firstName:this.nameRef.current.value})
-          .then(data => {
-            console.log(data[0]); 
-            console.log(data[1]);
-            this.setState({registration_object:data[0]})// JSON data parsed by `data.json()` call
-    if (data[1]===200){
-
-            this.setState({ showModal1: true ,
+            if (res==="Please check your details"){
+                window.location.reload()
                 
-            })
-            alert("National Id verified. Validate your profile below")
+            }
+            else if (res==="Account already exists"){
+                this.props.history.push('/UserLogin')
+
+            }
+            else{this.setState({registration_object:res,showModal1:true})
+                localStorage.setItem('regObject', JSON.stringify(res))
+                let regObject = localStorage.getItem('regObject')
+                console.log(JSON.parse(regObject))
+        }
+
+            
+        })
         
-    }
-    else if (data[1]===403){
-        alert("Please check your first name or ID number and try again")
     
-    }
-    else{
-        alert("You already have an account.Click OK to proceed to login")
-        this.props.history.push('/UserLogin')
-    }
-          })
+        // if (myStatus===200){
+        //         this.setState({ showModal1: true ,
+                    
+        //         })
+                
+        // }
+        // else if (myStatus===403){
+        //     window.location.reload(true)
         
-         
+        // }
+        // else{
+            
+        //     this.props.history.push('/UserLogin')
+        // }
+    // })
+
+}
+
+    
+
       
-      }
       hideModal1 = () => {
         this.setState({ showModal1: false });
     };
@@ -101,48 +116,83 @@ class Registration extends Component {
         this.setState({ [event.target.name]:event.target.value })
         
         }
+
     submitVer(event){
         event.preventDefault()
-        
-        async function postData(url = '', data = {}) {
-            // Default options are marked with *
-            const response = await fetch(url, {
-              method: 'POST', // *GET, POST, PUT, DELETE, etc.
-              mode: 'cors', // no-cors, *cors, same-origin
-              // *default, no-cache, reload, force-cache, only-if-cached
-               // include, *same-origin, omit
-              headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-              },
-              redirect: 'follow', // manual, *follow, error
- // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-              body: JSON.stringify(data) // body data type must match "Content-Type" header
-            });
-            return  response.json();
-            // parses JSON response into native JavaScript objects
-          }
+        const regObject = localStorage.getItem('regObject')
+        fetch("https://api.elokiravote.ml/users", {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({ firstName:this.state.registration_object.firstName,lastName:this.state.registration_object.lastName,idNumber:this.state.registration_object.idNumber,phoneNumber:this.state.phoneNumber})
 
+        })
+        .then(data=>{
+            if (data.status===200){
+                     
+                       return data.json()
+            }
+            else if (data.status===403){
+                
+                return "Please provide a valid phone number"
+            }
+            else{
+                
+                return "You already have an account.Click OK to proceed to login"
+            }})
+        .then(res=>{console.log(res)
+            if (res==="Please provide a valid phone number"){
+                alert("Please provide a valid phone number") 
+                window.location.reload() 
+            }
+            else if (res==="You already have an account.Click OK to proceed to login"){
+                alert("You already have an account.Click OK to proceed to login")
+                this.props.history.push('/UserLogin') 
 
-
-
-        postData('https://api.elokiravote.ml/users',{firstName:this.state.registration_object[0],lastName:this.state.registration_object[2],idNumber:this.state.registration_object[1],phoneNumber:this.state.phoneNumber})
-        .then(res => res.json())
-        .then(data => {
-            console.log(data); 
-            // console.log(data[1])
-            this.setState({verification_object:data})// JSON data parsed by `data.json()` call
-    if (data[1]===200){
-            this.setState({ showModal2: true });
-        
-     
-    }})}
-
-
+            }
+            else{this.setState({verification_object:res,showModal2:true})}
+            
+        })
+        .catch(err=>console.log(err))
+    }
+    
+    handleGenCode(event){
+        event.preventDefault()
+        fetch("https://api.elokiravote.ml/users", {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({loginId:this.state.verification_object.loginId,loginCode:this.state.loginCode})
+        })
+        .then(data=>{
+            if (data.status===401){
+                 return "Authentication Failed. Press OK to generate a new code"
+                
+            }
+            return data.json()})
+        .then(res=>{console.log(res)
+          if (res==="Authentication Failed. Press OK to generate a new code"){
+            window.location.reload()
+       alert ("Authentication Failed. Press OK to generate a new code")      
+      
+}
+else{
+               this.setState({auth_object:res})
+               this.props.history.push('/Election')
+               }
+       
+            
+            
+        })
+        .catch(err=>console.log(err))
+    }
+       
     render() {
         
-        console.log(this.state.registration_object)
-        // console.log(this.state.phoneNumber)
+        console.log(this.state.registration_object.firstName)
+         console.log(this.state.phoneNumber)
         
         return ( < div className = "formContainer" style = {
             { height: '50vh', borderRadius: "25px", marginTop: '80px',justifyContent: "center", display: "block", textAlign: "center" }
@@ -158,7 +208,7 @@ class Registration extends Component {
             <
             Form.Label > First Name < /Form.Label> <
             Form.Control type = "text"
-            name = "fName"  ref={this.nameRef}
+            name = "firstName"  ref={this.nameRef}
             placeholder = "Enter your First Name" / > < /Form.Group></Form.Row >
             <
             Form.Row >
@@ -167,7 +217,7 @@ class Registration extends Component {
             controlId = "formGridIdNumber" >
             <
             Form.Label > National ID Number < /Form.Label> <
-            Form.Control name = "id" type="text"  ref={this.idRef}
+            Form.Control name = "idNumber" type="text"  ref={this.idRef}
             placeholder = "Enter your National ID Number" / >
             <
             /Form.Group>
@@ -236,13 +286,13 @@ class Registration extends Component {
             Modal.Title > < center > One-Time Verification Code < /center> < /Modal.Title > < /
             Modal.Header > <
             Modal.Body ><
-            Form>
+            Form onSubmit={this.handleGenCode}>
             <
             Form.Label > < h1 > Enter the 6 digit code that has been sent to you< /h1></Form.Label >
             <
             Form.Group controlId = "formGridIdCode" >
             <
-            Form.Control name = "code" refs={this.codeRef}
+            Form.Control name = "loginCode" onChange={this.handleChange}
             placeholder = "Enter the sent code" / >
             <
             /Form.Group>

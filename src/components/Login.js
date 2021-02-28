@@ -13,70 +13,100 @@ class Login extends Component {
             show:false,
             login_object:[],
             idNumber:"",
-            gen_code:""
+            loginCode:"",
+            auth_obj:[]
              
         }
         this.handleForm=this.handleForm.bind(this)
+        this.handleCodeVer=this.handleCodeVer.bind(this)
         this.idRef=React.createRef()
-        this.handleChange=this.handleChange.bind(this)
+        this.handleCodeChange=this.handleCodeChange.bind(this)
+        this.handleIdChange=this.handleIdChange.bind(this)
         this.hideModal=this.hideModal.bind(this)
 
 
     }
 
 
-    
-    
-    handleForm=(event)=> {
+
+    handleForm(event){
         event.preventDefault()
-               
-        async function postData(url = '', data = {}) {
-          // Default options are marked with *
-          const response = await fetch(url, {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, *cors, same-origin
-            // *default, no-cache, reload, force-cache, only-if-cached
-             // include, *same-origin, omit
+        fetch("https://api.elokiravote.ml/users/login/request", {
+            method: "POST",
             headers: {
-              'Content-Type': 'application/json'
-              // 'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-type': 'application/json'
             },
-            redirect: 'follow', // manual, *follow, error
-// no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify(data) // body data type must match "Content-Type" header
-          });
-          return  [response.json(),response.status];
-          // parses JSON response into native JavaScript objects
-        }
+            body: JSON.stringify({ idNumber:this.state.idNumber})
+        })
+        .then(data=>{
+            if (data.status===404){
+                alert("Your Account does not exist.Click OK to proceed to signup")
+                this.props.history.push('/Register')
+            }
+            return data.json()})
+        .then(res=>{console.log(res)
+    
+               this.setState({login_object:res,show:true})
+       
+            
+            
+        })
+        .catch(err=>console.log(err))
+    }
+    
 
-
+handleCodeVer(event){
+        event.preventDefault()
+        fetch("https://api.elokiravote.ml/users/login", {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({loginId:this.state.login_object.loginId,loginCode:this.state.loginCode})
+        })
+        .then(data=>{
+            if (data.status===401){
+                 return "Invalid code entered. Press OK to generate a new code"
+                
+            }
+            return data.json()})
+        .then(res=>{console.log(res)
+          if (res==="Invalid code entered. Press OK to generate a new code"){
+            window.location.reload()
+       alert ("Invalid code entered. Press OK to generate a new code")      
       
-        postData('https://api.elokiravote.ml/users/login/request',{idNumber:this.state.idNumber})
-        .then(data => {
-          console.log(data[0]); 
-          console.log(data[1])
-          const mydata=data[0]
-          const mystatus=data[1]
-          this.setState({login_object:mydata})// JSON data parsed by `data.json()` call
-          console.log(mydata[1])
-  if (mystatus===200){
-          this.setState({ showModal: true })
-          
-  }
+}
+else{
+               this.setState({auth_object:res})
+               localStorage.setItem("token", res.token)
+               this.props.history.push('/Election')
+               }
+       
+            
+            
+        })
+        .catch(err=>console.log(err))
+    }
+        
+    
+    
+handleCodeChange = event =>{
 
-})}
-handleChange = event =>{
-
-    this.setState({ [event.target.name]:event.target.value })
+    this.setState({ loginCode:event.target.value })
     
     }
+    handleIdChange = event =>{
+
+        this.setState({ idNumber:event.target.value })
+        
+        }
     hideModal = () => {
         this.setState({ show: false });
     };
 
 
     render() {
-        console.log(this.state.login_object)
+        console.log(this.state.loginCode)
         console.log(this.state.idNumber)
         return ( < div className = "formContainer"
             style = {
@@ -91,7 +121,7 @@ handleChange = event =>{
             Form.Group as = { Col }
             controlId = "NationalId" >
             <
-            Form.Control name = "idNumber" onChange={this.handleChange}
+            Form.Control name = "idNumber" onChange={this.handleIdChange}
             placeholder = "Enter your National ID Number " / >
             <
             /
@@ -122,13 +152,13 @@ handleChange = event =>{
             Modal.Title > < center > One-Time Verification Code < /center> < /Modal.Title > < /
             Modal.Header > <
             Modal.Body ><
-            Form>
+            Form onSubmit={this.handleCodeVer}>
             <
-            Form.Label > < h1 > Enter the 6 digit code that has been sent to you< /h1></Form.Label >
+            Form.Label > < h5 > Enter the 6 digit code that has been sent to you< /h5></Form.Label >
             <
             Form.Group controlId = "formGridIdCode" >
             <
-            Form.Control name = "code" 
+            Form.Control name = "loginCode" onChange={this.handleCodeChange} 
             placeholder = "Enter the sent code" / >
             <
             /Form.Group>

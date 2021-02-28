@@ -25,6 +25,10 @@ class Election extends Component {
 
     }
     componentDidMount() {
+
+        const token = localStorage.getItem('token')
+        console.log("token: "+token)
+
         this.setState({}, () => {
             Promise.all([
                 fetch("http://localhost:4000/election").then(value => value.json()),
@@ -121,7 +125,7 @@ const candModal=candidate.map(cand=>
         return  (
 
         <
-        Card key={cand.candidateId} style = {
+        Card key={cand.id} style = {
             { width: "18rem", margin: "auto", marginBottom: "50px", justifyContent: "center", display: "block", textAlign: "center" }
         } >
         <
@@ -132,7 +136,7 @@ const candModal=candidate.map(cand=>
         Card.Body >
         <
         Card.Title > {cand.candidateName} < /Card.Title><
-        Button type="submit" disabled={this.state.isButtonDisabled}onClick={() => this.castVote(cand.candidateId)} variant = "success" >
+        Button type="submit" disabled={this.state.isButtonDisabled}onClick={() => this.castVote(cand.id)} variant = "success" >
         Vote <
         /Button> < /
         Card.Body > <
@@ -180,10 +184,10 @@ const myPos= newpos.map((pos) => { return (<
 
                     <
                     /h5 >  <
-                    p className = "card-text" > Click below to see the positions being contested <
+                    p className = "card-text" > Click below to see the position being contested <
                     /p > < Dropdown > < Dropdown.Toggle variant = "success"
                     id = "dropdown-basic" >
-                    Positions Being Contested For < /Dropdown.Toggle>
+                    Position Being Contested For < /Dropdown.Toggle>
 
                     <
                     Dropdown.Menu>

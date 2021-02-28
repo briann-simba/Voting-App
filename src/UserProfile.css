@@ -1,0 +1,105 @@
+
+  .teams {
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+  }
+  
+  .carde{
+      margin-top:20px;
+    background:#2a1542;
+    padding:2rem;
+    display:flex;
+    flex-direction:column;
+   
+    width:350px;
+    height:450px;
+    box-shadow:2px 4px 8px seagreen;
+    border-radius:25px;
+    animation:animate 4s linear infinite forwards;
+  }
+  .cardSpecial{
+  margin-top:20px;
+  margin-left:35%;
+ background:url("https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80");
+  padding:2rem;
+  display:flex;
+  flex-direction:column;
+ 
+  width:500px;
+  height:500px;
+  box-shadow:2px 4px 8px seagreen;
+  border-radius:25px;
+  animation:animate 4s linear infinite forwards;
+
+  }
+
+  .carde:hover{
+    box-shadow:2px 2px 12px 2px rgba(74, 189, 154,.3),2px 2px 12px 2px rgba(71, 131, 204,.3);
+    color:springgreen;
+  
+  }
+  .carde-top{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  
+  .carde-top img{
+    width:80px;
+    height:80px;
+    box-shadow:1px 1px 4px 2px rgba(255,255,255,.2);
+    border-radius:50%;
+  }
+  .carde-top .name{
+    margin-top:10px;
+    color:#fff;
+    text-transform:capitalize;
+  }
+  .carde-top .link {
+    color: #838985;
+    cursor:pointer;
+  }
+  .carde-top .link::before{
+    content:"@"
+  }
+  .carde-top .link:hover{
+    color:red;
+  }
+  .btne{
+    border:2px solid #1D0E2E;
+    padding:.6rem;
+    border-radius:30px;
+    color:#fff;
+    background:transparent;
+    cursor:pointer;
+    text-transform:capitalize;
+    transition:.2s easy-in-out;
+  }
+  .btne:hover{
+    background:#1D0E2E;
+    box-shadow:2px 4px 3px #1D0E2E;
+  }
+  
+  @keyframes animate{
+    0%{
+      border:2px solid red;
+    }
+    20%{
+      border:2px solid #4783cc;
+    } 
+    40%{
+      border:2px solid #ccaf47;
+    }
+    60%{
+      border:2px solid #ca47cc;
+    }
+    80%{
+      border:2px solid #d4555d;
+    } 
+    100%{
+      border:2px solid #b5a951;
+    }
+  }
