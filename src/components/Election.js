@@ -14,6 +14,7 @@ class Election extends Component {
             position:[],
             candidate:[],
             show: false,
+            hasVoted:false,
             isButtonDisabled:false,
             
         }
@@ -28,6 +29,15 @@ class Election extends Component {
 
         const token = localStorage.getItem('token')
         console.log("token: "+token)
+        if (!token){
+            alert("Please Sign Up First to View this Page")
+            this.props.history.push('/Register')
+        }
+
+        if (this.state.hasVoted){
+            alert("No elections are ongoing as at now.You may only view election results")
+            this.props.history.push('/Results')
+        }
 
         this.setState({}, () => {
             Promise.all([
@@ -86,7 +96,7 @@ this.setState({show:true})
 
     castVote= (id)=> {
         this.setState({
-            isButtonDisabled: true
+            isButtonDisabled: true,hasVoted:true
         })
 
         

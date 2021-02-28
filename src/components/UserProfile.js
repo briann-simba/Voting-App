@@ -23,23 +23,16 @@ class UserProfile extends Component {
         }
         
             Promise.all([
-                fetch("https://cors-anywhere.herokuapp.com/https://api.elokiravote.ml/users/me", {
+                fetch("https://api.elokiravote.ml/users/me", {
                     method: "GET",
             
                     headers: {
                         'Content-type': 'application/json',
                         'Authorization':`Bearer ${token}`,
-                        'Access-Control-Allow-Origin': '*',
+                        
                     }    
-                }).then(data=>{
-                    if (data.status===200){
-                        return data.json()
-                    }
-                    else{
-                        return "ERROR!NOT AUTHORIZED!"
-                    }
-                
-                }),
+                }).then(data=>
+                    data.json()),
                 fetch("https://api.elokiravote.ml/users", {
                     method: "GET",
             
@@ -47,15 +40,9 @@ class UserProfile extends Component {
                         'Content-type': 'application/json',
                         'Authorization':`Bearer ${token}`
                     }    
-                }).then(data=>{
-                    if (data.status===200){
-                        return data.json()
-                    }
-                    else{
-                        return "ERROR!NOT AUTHORIZED!"
-                    }
-                
-                }),
+                }).then(data=>
+                        data.json()
+                ),
                 fetch("https://api.elokiravote.ml/users/43782167-7342-4548-B2ec-97db8d9ee0d0", {
                     method: "GET",
             
@@ -63,28 +50,16 @@ class UserProfile extends Component {
                         'Content-type': 'application/json',
                         'Authorization':`Bearer ${token}`
                     }    
-                }).then(data=>{
-                    if (data.status===200){
-                        return data.json()
-                    }
-                    else{
-                        return "ERROR!NOT AUTHORIZED!"
-                    }
-                
-                })])
+                }).then(data=>
+                    data.json())
                 .then(res => {
-                   console.log(res)
-                   if (res==="ERROR!NOT AUTHORIZED!"){
-                    alert("Please Sign Up First to View")
-                    this.props.history('/Register')
-                }
-                else{
+                  
                    this.setState({
                        myProfile:res[0],
                        allUsers:res[1],
                        userbyId:res[2]
                    })
-                }      
+                     
                   //json response
                 
                 
